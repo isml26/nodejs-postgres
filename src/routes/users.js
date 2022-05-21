@@ -28,7 +28,7 @@ router.post('/users', async (req, res) => {
     } = req.body;
     const user = await UserRepo.insert(username, bio);
     if (user) {
-        return res.send(user)
+        return res.status(201).send(user)
     }
     return res.sendStatus(404);
 
@@ -43,18 +43,20 @@ router.put('/users/:id', async (req, res) => {
         bio
     } = req.body;
     const user = await UserRepo.update(id, username, bio);
-    if(user){
+    if (user) {
         return res.send(user);
     }
     return res.status(404).send("Cannot find user with given id!");
 });
 
 router.delete('/users/:id', async (req, res) => {
-    const {id} = req.params;
+    const {
+        id
+    } = req.params;
     const user = await UserRepo.delete(id);
-    if(user){
+    if (user) {
         return res.send(user);
-    }else{
+    } else {
         return res.status(404).send("Cannot find user with given id!");
     }
 });
